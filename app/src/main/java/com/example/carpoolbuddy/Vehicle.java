@@ -45,6 +45,7 @@ public class Vehicle implements Parcelable {
 
 
 
+
     protected Vehicle(Parcel in){
         owner = in.readString();
         model = in.readString();
