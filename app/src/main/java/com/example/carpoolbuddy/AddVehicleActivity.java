@@ -116,9 +116,9 @@ public class AddVehicleActivity extends AppCompatActivity {
 
         if(selectedRole.equals("Car")) {
             String owner = mAuth.getCurrentUser().getUid();
-            int capacity = Integer.parseInt(model.getText().toString());
+            int capacityInt = Integer.parseInt(capacity.getText().toString());
             double basePriceV = Double.parseDouble(basePrice.getText().toString());
-            newVehicle = new Car(vehicleID, modelString, capacity, basePriceV, owner);
+            newVehicle = new Car(vehicleID, modelString, capacityInt, basePriceV, owner);
 
            // firestore.collection("vehicles").document(vehicleID).set(newVehicle);
         }

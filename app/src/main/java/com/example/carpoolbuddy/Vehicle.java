@@ -9,7 +9,7 @@ public class Vehicle implements Parcelable {
     private String owner;
     private String model;
     private int capacity;
-    private int remainingCapacity;
+   // private int remainingCapacity;
     private String vehicleID;
     private ArrayList<String> ridersUIDs;
     private boolean open;
@@ -51,7 +51,7 @@ public class Vehicle implements Parcelable {
         model = in.readString();
         capacity = in.readInt();
         vehicleID =in.readString();
-        remainingCapacity = in.readInt();
+      //  remainingCapacity = in.readInt();
         ridersUIDs = in.createStringArrayList();
         open = in.readByte()!= 0;
         vehicleType = in.readString();
@@ -145,9 +145,9 @@ public class Vehicle implements Parcelable {
 
     }
 
-    public void setRemainingCapacity(int remainingCapacity) {
-        this.remainingCapacity = remainingCapacity;
-    }
+//    public void setRemainingCapacity(int remainingCapacity) {
+//        this.remainingCapacity = remainingCapacity;
+//    }
 
 
     @Override
@@ -174,7 +174,7 @@ public class Vehicle implements Parcelable {
         dest.writeString(owner);
         dest.writeString(model);
         dest.writeInt(capacity);
-        dest.writeInt(remainingCapacity);
+     //   dest.writeInt(remainingCapacity);
         dest.writeString(vehicleID);
         dest.writeStringList(ridersUIDs);
         dest.writeString(vehicleType);

@@ -63,8 +63,8 @@ public class VehicleProfileActivity extends AppCompatActivity implements View.On
             carMaxCapacityDataTextView.setText(String.valueOf(selectedVehicle.getCapacity()));
             carRemainingCapacityDataTextView.setText(String.valueOf(selectedVehicle.getRemainingCapacity()));
             bookedUIDs.setText(selectedVehicle.getRidersUIDs().toString());
-            carOwnerTextView.setText(selectedVehicle.getRidersUIDs().toString());
-            vehicleTypeTextView = findViewById(R.id.VehicleTypeTextView);
+            carOwnerTextView.setText(selectedVehicle.getOwner());
+            vehicleTypeTextView.setText(selectedVehicle.getVehicleType());
         }
 
         // find the button and attach a listener
@@ -73,6 +73,7 @@ public class VehicleProfileActivity extends AppCompatActivity implements View.On
     }
 
     public void bookRide() {
+        System.out.println("BOOK RIDE");
         //close vehicle if user took last seat available
         if(selectedVehicle.getRemainingCapacity() == 1) {
             firestore.collection("vehicles").document(selectedVehicle.getVehicleID())
@@ -97,7 +98,7 @@ public class VehicleProfileActivity extends AppCompatActivity implements View.On
                     }
                 });
         // right here
-        System.out.println(selectedVehicle.getRidersUIDs());
+        System.out.println("RIDERS UIDS" + selectedVehicle.getRidersUIDs());
     }
 
     @Override

@@ -22,7 +22,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class VehiclesInfoActivity extends AppCompatActivity implements FISVehicleViewHolder.onVehicleListener {
+public class EditActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
@@ -32,35 +32,26 @@ public class VehiclesInfoActivity extends AppCompatActivity implements FISVehicl
 
     //added for testing
     private ArrayList<Vehicle> vehiclesList;
-    
-     RecyclerView recView;
 
-
-
+    RecyclerView recView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vehicles_info);
+        setContentView(R.layout.activity_edit);
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         vehiclesList = new ArrayList<Vehicle>();
         firestore = FirebaseFirestore.getInstance();
 
-        recView = findViewById(R.id.recView);
-
-//        FISVehicleAdapter myAdapter = new FISVehicleAdapter(vehiclesList );
-//        recView.setAdapter(myAdapter);
-//
-//        recView.setLayoutManager(new LinearLayoutManager(this));
-
-
+        recView = findViewById(R.id.recycleView);
     }
+
     public void testDB(View v) {
         vehiclesList.clear();
         TaskCompletionSource<String> getAllRidesTask = new TaskCompletionSource<>();
-        firestore.collection("vehicles").whereEqualTo("open", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        firestore.collection("vehicles").whereEqualTo("open", true).whereEqualTo("owner" , mUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful() && task.getResult() != null) {
@@ -82,10 +73,6 @@ public class VehiclesInfoActivity extends AppCompatActivity implements FISVehicl
             }
         });
     }
-    public void gotoUserProfile(View v) {
-        Intent intent = new Intent(this, UserProfileActivity.class);
-        startActivity(intent);
-    }
 
     @Override
     public void onVehicleClick(int position) {
@@ -100,11 +87,9 @@ public class VehiclesInfoActivity extends AppCompatActivity implements FISVehicl
         System.out.println("VEHICLE INFO: " + vehiclesList.toString());
         FISVehicleAdapter myAdapter = new FISVehicleAdapter(vehiclesList , this);
         recView.setAdapter(myAdapter);
-        recView.setLayoutManager(new LinearLayoutManager(VehiclesInfoActivity.this));
+        recView.setLayoutManager(new LinearLayoutManager(EditActivity.this));
     }
 
-    public ArrayList<Vehicle> getVehiclesList() {
-        return vehiclesList;
-    }
+
 
 }
